@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cesel6exat3m1"]
+
+[ext_resource type="PackedScene" uid="uid://b2ecdecblu45o" path="res://Terrain/terrain_manager.tscn" id="1_bsmo2"]
+[ext_resource type="PackedScene" uid="uid://c7x5mwu2lecpf" path="res://Factions/Knights/Troops/Pawn/pawn.tscn" id="2_tvwiw"]
+
+[node name="GameLevel" type="Node2D"]
+
+[node name="TerrainManager" parent="." instance=ExtResource("1_bsmo2")]
+
+[node name="Pawn" parent="." instance=ExtResource("2_tvwiw")]
+position = Vector2(298, 100)
