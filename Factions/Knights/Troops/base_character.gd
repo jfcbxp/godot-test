@@ -10,6 +10,7 @@ class_name BaseCharacter
 @export var _animation_player: AnimationPlayer
 @export var _sprite2D: Sprite2D
 @export var bridge: TileMapLayer
+@export var attack_area_collision: CollisionShape2D
 
 var _can_attack: bool = true
 var _attack_animation_name: String 
@@ -42,9 +43,11 @@ func _attack() -> void:
 func _animate() -> void:
 	if velocity.x > 0:
 		_sprite2D.flip_h = false
+		attack_area_collision.position.x = 64
 		
 	if velocity.x < 0:
 		_sprite2D.flip_h = true
+		attack_area_collision.position.x = -64
 		
 	if _can_attack == false:
 		_animation_player.play(_attack_animation_name)
@@ -77,3 +80,9 @@ func update_collision_layer_mask(type: String) -> void:
 		set_collision_mask_value(2,false)
 		set_collision_mask_value(1,true)
 		bridge.z_index = 0
+
+
+func _on_attack_area_body_entered(body: Node2D) -> void:
+	if body is PhysicsTree:
+		body.update_health([1,5])
+	pass # Replace with function body.
