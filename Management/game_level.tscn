@@ -1,11 +1,76 @@
-[gd_scene load_steps=3 format=3 uid="uid://cesel6exat3m1"]
+[gd_scene load_steps=10 format=4 uid="uid://cesel6exat3m1"]
 
 [ext_resource type="PackedScene" uid="uid://b2ecdecblu45o" path="res://Terrain/terrain_manager.tscn" id="1_bsmo2"]
 [ext_resource type="PackedScene" uid="uid://c7x5mwu2lecpf" path="res://Factions/Knights/Troops/Pawn/pawn.tscn" id="2_tvwiw"]
+[ext_resource type="Texture2D" uid="uid://cirvds812ttoi" path="res://Terrain/Bridge/Bridge_All.png" id="3_1dqdy"]
+[ext_resource type="Script" path="res://Interectables/bridge_area.gd" id="3_snwwf"]
+[ext_resource type="PackedScene" uid="uid://15ecvc61700q" path="res://Decoration/mushroom.tscn" id="5_n0a22"]
+[ext_resource type="PackedScene" uid="uid://bhjsdvntr0g24" path="res://Resources/Trees/tree.tscn" id="6_e3q3m"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wy16b"]
+texture = ExtResource("3_1dqdy")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -32, 32, -32, 32, -16, -16, -16)
+0:0/0/physics_layer_0/polygon_1/points = PackedVector2Array(32, 16, 32, 32, -16, 32, -16, 16)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, -16, -32, -16)
+1:0/0/physics_layer_0/polygon_1/points = PackedVector2Array(32, 16, 32, 32, -32, 32, -32, 16)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 16, -32, 16, -16, -32, -16)
+2:0/0/physics_layer_0/polygon_1/points = PackedVector2Array(16, 16, 16, 32, -32, 32, -32, 16)
+
+[sub_resource type="TileSet" id="TileSet_g40o7"]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 2
+physics_layer_0/collision_mask = 2
+sources/0 = SubResource("TileSetAtlasSource_wy16b")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_srwid"]
+size = Vector2(784, 48)
 
 [node name="GameLevel" type="Node2D"]
 
 [node name="TerrainManager" parent="." instance=ExtResource("1_bsmo2")]
+position = Vector2(0, 3)
 
-[node name="Pawn" parent="." instance=ExtResource("2_tvwiw")]
-position = Vector2(298, 100)
+[node name="Bridge" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAATAAMAAAACAAAAAAAHAAMAAAAAAAAAAAAIAAMAAAABAAAAAAAJAAMAAAABAAAAAAAKAAMAAAABAAAAAAALAAMAAAABAAAAAAAMAAMAAAABAAAAAAANAAMAAAABAAAAAAAOAAMAAAABAAAAAAAPAAMAAAABAAAAAAAQAAMAAAABAAAAAAARAAMAAAABAAAAAAASAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_g40o7")
+collision_visibility_mode = 2
+
+[node name="BridgeArea" type="Area2D" parent="Bridge"]
+position = Vector2(504, 222)
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("3_snwwf")
+
+[node name="Collision" type="CollisionShape2D" parent="Bridge/BridgeArea"]
+position = Vector2(359, 0)
+shape = SubResource("RectangleShape2D_srwid")
+
+[node name="Decorations" type="Node2D" parent="."]
+
+[node name="Pawn" parent="Decorations" node_paths=PackedStringArray("bridge") instance=ExtResource("2_tvwiw")]
+position = Vector2(1408, 256)
+bridge = NodePath("../../Bridge")
+
+[node name="Mushroom" parent="Decorations" instance=ExtResource("5_n0a22")]
+position = Vector2(384, 192)
+
+[node name="Mushroom3" parent="Decorations" instance=ExtResource("5_n0a22")]
+position = Vector2(1536, 448)
+
+[node name="Mushroom2" parent="Decorations" instance=ExtResource("5_n0a22")]
+position = Vector2(1344, 192)
+
+[node name="Tree" parent="Decorations" instance=ExtResource("6_e3q3m")]
+position = Vector2(1472, 384)
+
+[node name="Tree2" parent="Decorations" instance=ExtResource("6_e3q3m")]
+position = Vector2(1280, 384)
+
+[node name="Ladders" type="Node2D" parent="."]
+
+[connection signal="body_entered" from="Bridge/BridgeArea" to="Bridge/BridgeArea" method="_on_body_entered"]
+[connection signal="body_exited" from="Bridge/BridgeArea" to="Bridge/BridgeArea" method="_on_body_exited"]

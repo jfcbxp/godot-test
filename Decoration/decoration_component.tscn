@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://basqps1id8lwd"]
+
+[ext_resource type="Script" path="res://Decoration/decoration_component.gd" id="1_lajty"]
+
+[node name="DecorationComponent" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_lajty")
+
+[node name="Textura1" type="Sprite2D" parent="."]
+position = Vector2(8, 8)
+
+[node name="Textura2" type="Sprite2D" parent="."]
+position = Vector2(-8, 8)
+
+[node name="Textura3" type="Sprite2D" parent="."]
+position = Vector2(0, -8)

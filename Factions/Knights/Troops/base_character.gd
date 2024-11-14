@@ -9,7 +9,7 @@ class_name BaseCharacter
 @export_category("Objects")
 @export var _animation_player: AnimationPlayer
 @export var _sprite2D: Sprite2D
-
+@export var bridge: TileMapLayer
 
 var _can_attack: bool = true
 var _attack_animation_name: String 
@@ -61,3 +61,19 @@ func _on_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "attack_axe" or anim_name == "attack_hammer":
 		_can_attack = true
 		set_physics_process(true)
+
+func update_collision_layer_mask(type: String) -> void:
+	if type == "in":
+		set_collision_layer_value(2,true)
+		set_collision_layer_value(1,false)
+		set_collision_mask_value(2,true)
+		set_collision_mask_value(1,false)
+		bridge.z_index = 1
+		
+		
+	if type == "out":
+		set_collision_layer_value(2,false)
+		set_collision_layer_value(1,true)
+		set_collision_mask_value(2,false)
+		set_collision_mask_value(1,true)
+		bridge.z_index = 0
