@@ -138,7 +138,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6of0d"]
-radius = 64.0
+radius = 32.0
 
 [node name="Pawn" node_paths=PackedStringArray("attack_area_collision") instance=ExtResource("1_os076")]
 _left_attack_name = "attack_axe"
@@ -164,6 +164,6 @@ libraries = {
 autoplay = "idle"
 
 [node name="Collision" type="CollisionShape2D" parent="AttackArea" index="0"]
-position = Vector2(64, 0)
+position = Vector2(32, 0)
 shape = SubResource("CircleShape2D_6of0d")
 disabled = true

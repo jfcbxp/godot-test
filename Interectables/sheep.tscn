@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://bken2n4q2cmga"]
+
+[ext_resource type="Script" path="res://Interectables/sheep.gd" id="1_d1h7s"]
+[ext_resource type="Texture2D" uid="uid://3og6d7ojkqeb" path="res://Resources/Sheep/HappySheep_All.png" id="1_ebsv6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8e714"]
+radius = 6.0
+height = 44.0
+
+[sub_resource type="Animation" id="Animation_57ggj"]
+resource_name = "idle"
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Texture:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_en7jd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Texture:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_s0fsv"]
+resource_name = "walk"
+length = 0.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Texture:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r52kf"]
+_data = {
+"RESET": SubResource("Animation_en7jd"),
+"idle": SubResource("Animation_57ggj"),
+"walk": SubResource("Animation_s0fsv")
+}
+
+[node name="Sheep" type="CharacterBody2D"]
+script = ExtResource("1_d1h7s")
+
+[node name="Texture" type="Sprite2D" parent="."]
+position = Vector2(0, -17)
+texture = ExtResource("1_ebsv6")
+hframes = 8
+vframes = 2
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+show_behind_parent = true
+position = Vector2(0, -2)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_8e714")
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_r52kf")
+}
+autoplay = "idle"

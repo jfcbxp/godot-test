@@ -43,11 +43,11 @@ func _attack() -> void:
 func _animate() -> void:
 	if velocity.x > 0:
 		_sprite2D.flip_h = false
-		attack_area_collision.position.x = 64
+		attack_area_collision.position.x = 32
 		
 	if velocity.x < 0:
 		_sprite2D.flip_h = true
-		attack_area_collision.position.x = -64
+		attack_area_collision.position.x = -32
 		
 	if _can_attack == false:
 		_animation_player.play(_attack_animation_name)
